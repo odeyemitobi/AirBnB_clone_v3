@@ -170,7 +170,6 @@ Odeyemi Tobiloba - [Github](https://github.com/odeyemitobi) / [Twitter](https://
 ## New Features and Contributions
 Improvements made to existing features.
 
-
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
