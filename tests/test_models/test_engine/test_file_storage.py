@@ -22,7 +22,6 @@ FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
-
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
     @classmethod
@@ -66,7 +65,6 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,3 +111,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_file_storage(self):
+        """Test the get method for FileStorage"""
+        state = State(name="California")
+        state.save()
+        state_id = state.id
+        self.assertEqual(models.storage.get(State, state_id), state)
+        self.assertIsNone(models.storage.get(State, "invalid_id"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_file_storage(self):
+        """Test the count method for FileStorage"""
+        self.assertEqual(models.storage.count(), len(models.storage.all()))
+        self.assertEqual(models.storage.count(State), len(models.storage.all(State)))
